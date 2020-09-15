@@ -1,0 +1,5 @@
+ago:TIME_AGO
+previous:TIME_RANGE_PREV
+last:TIME_RANGE_PREV
+between:BETWEEN
+equal:CONTAIN

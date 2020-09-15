@@ -1,0 +1,8 @@
+1:QTR1
+2:QTR2
+3:QTR3
+4:QTR4
+first:QTR1
+second:QTR2
+third:QTR3
+fourth:QTR4

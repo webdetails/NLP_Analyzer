@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!-- /*!
+ * HITACHI VANTARA PROPRIETARY AND CONFIDENTIAL
+ *
+ * Copyright 2002 - 2020 Hitachi Vantara. All rights reserved.
+ *
+ * NOTICE: All information including source code contained herein is, and
+ * remains the sole property of Hitachi Vantara and its licensors. The intellectual
+ * and technical concepts contained herein are proprietary and confidential
+ * to, and are trade secrets of Hitachi Vantara and may be covered by U.S. and foreign
+ * patents, or patents in process, and are protected by trade secret and
+ * copyright laws. The receipt or possession of this source code and/or related
+ * information does not convey or imply any rights to reproduce, disclose or
+ * distribute its contents, or to manufacture, use, or sell anything that it
+ * may describe, in whole or in part. Any reproduction, modification, distribution,
+ * or public display of this information without the express written authorization
+ * from Hitachi Vantara is strictly prohibited and in violation of applicable laws and
+ * international treaties. Access to the source code contained herein is strictly
+ * prohibited to anyone except those individuals and entities who have executed
+ * confidentiality and non-disclosure agreements or other agreements with Hitachi Vantara,
+ * explicitly covering such access.
+ */ -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <title>NLP Analyzer</title>
+
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+
+    <script type="text/javascript">
+      var analyzerApi = null;
+
+      /* This function is called when the Analyzer view in the iFrame has initialized */
+      function onAnalyzerLoad(api) {
+        // Keep the Analyzer API object for later
+        analyzerApi = api;
+      }
+
+      function receive() {
+        var query = document.getElementById("query").value;
+
+        //change this to another place
+        analyzerApi.ui.showRepositoryButtons(true);
+
+        var repo = analyzerApi.report._getReport();
+
+        var schemaRequest = new XMLHttpRequest();
+
+        schemaRequest.onreadystatechange = function () {
+          if ((schemaRequest.readyState == 4) & (schemaRequest.status == 200)) {
+            var schema = schemaRequest.responseText;
+
+            var ajaxRequest = new XMLHttpRequest();
+            ajaxRequest.onreadystatechange = function () {
+              if ((ajaxRequest.readyState == 4) & (ajaxRequest.status == 200)) {
+
+                var response = JSON.parse(ajaxRequest.responseText);
+
+                analyzerApi.operation.resetReport();
+
+                analyzerApi.report.setVizId(response.viz);
+
+                analyzerApi.report.setLayoutFields("rows", response.rows);
+
+                analyzerApi.report.setLayoutFields("columns", response.columns);
+
+                analyzerApi.report.setLayoutFields("measures", response.measures);
+
+                var numfilters = response.numfilters;
+
+                for (var i = 0; i < numfilters.length; i++) {
+                  analyzerApi.report.setNumericFilters(
+                    numfilters[i].dim,
+                    numfilters[i].filter
+                  );
+                }
+
+                var filters = response.filters;
+
+                for (i = 0; i < filters.length; i++) {
+                  analyzerApi.report.setFilters(filters[i].dim, filters[i].filter);
+                }
+
+                // Refresh the Analyzer view
+                analyzerApi.operation.refreshReport();
+              }
+            };
+
+            ajaxRequest.open(
+              "POST",
+              "http://localhost:8080/NLPapp/visualization/?query=" + query
+            );
+            ajaxRequest.setRequestHeader('Content-Type', 'text/xml');
+            ajaxRequest.send(schema);
+
+            
+
+          }
+        }
+
+        schemaRequest.open(
+          "GET",
+          "http://localhost:8080/pentaho/plugin/data-access/api/datasource/analysis/catalog/" + repo.catalog
+        );
+
+        schemaRequest.send();
+
+      }
+    </script>
+  </head>
+  <body>
+
+  <header class="mb-3">
+    <nav class="nav-header">
+      <div class="nav-brand">
+        <img src="styles/logo-hitachi-black.svg" height="18" class="logo" alt="">
+      </div>
+    </nav>
+  </header>
+    
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm mt-5">
+        <h2 class="title mt-5">What do you want to visualize?</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm mt-3 mb-3">
+        <div class="input-group mb-3">
+          <input 
+            type="text"
+            class="form-control"
+            name="nlpquery"
+            id="query"
+            placeholder="Type your query here"
+            aria-label="Type your query here" 
+            aria-describedby="button-addon2"
+          >
+          <div class="input-group-append"></div>
+            <button
+              type="button" 
+              onclick="receive()"
+              type="button" 
+              class="btn btn-primary">Visualize
+          </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm">
+        <iframe
+        id="view1"
+        width="100%"
+        height="100%"
+        src="/pentaho/api/repos/xanalyzer/service/selectSchema"
+      ></iframe>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>
