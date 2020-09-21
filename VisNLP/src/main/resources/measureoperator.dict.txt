@@ -1,0 +1,8 @@
+top:TOP
+bottom:BOTTOM
+best:TOP
+worst:BOTTOM
+greater:GREATER_THAN_EQUAL
+less:LESS_THAN_EQUAL
+equal:EQUAL
+between:BETWEEN

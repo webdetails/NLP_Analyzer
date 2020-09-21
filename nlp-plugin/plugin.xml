@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 'plugin name' equals 'unequivocal plugin id' -->
+<plugin name="nlp-plugin" title="Pentaho NLP Analyzer Plugin">
+
+	<!-- ================================ -->
+	<!-- Content Types 					  -->
+	<!-- ================================ -->	
+
+	<content-types>
+
+		<!-- ================================ -->
+		<!-- Static resources 				  -->
+		<!-- ================================ -->
+
+        <static-paths>
+        	<!-- this translates to /api/repos/basic-plugin/<LOCAL_FOLDER>/<RESOURCE_FILENAME> -->
+            <static-path url="/nlp-plugin/lang" localFolder="lang"/>
+        </static-paths>
+	
+
+    </content-types>
+
+	<!-- ================================ -->
+	<!-- Overlays			 			  -->
+	<!-- ================================ -->
+
+	<overlays>
+
+		<!-- A new option under the 'Tools' menu -->
+		<overlay id="startup_tools_nlp" resourcebundle="api/repos/nlp-plugin/lang/messages">
+			<menubar id="toolsmenu">
+				<!-- 'toolsmenu': id of the menu under which we'll be adding our item -->
+				<menuitem id="tools_nlp"
+						  label="${nlp.tools.menu.item}"
+						  command="mantleXulHandler.openUrl('${nlp.tools.menu.item}','${nlp.tools.menu.item.title}', 'http://localhost:8080/NLPapp/')">
+				</menuitem>
+			</menubar>
+		</overlay>
+
+	</overlays>
+
+</plugin>

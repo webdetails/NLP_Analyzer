@@ -1,0 +1,148 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+/* --- NLP Analyzer Styles --- */
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12pt;
+    color: #414141;
+    background-color: #f0f0f0;
+}
+
+
+/* Header */
+
+header {
+    width: 100%;
+    z-index: 1100;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    position: fixed;
+    left: 0;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+
+    border-top: 4px solid #CC0000;
+    background-color: #FBFCFC;
+    height: 44px;
+    -webkit-box-shadow: 0 3px 5px rgba(0,0,0,0.16);
+    box-shadow: 0 3px 5px rgba(0,0,0,0.16);
+}
+
+header .nav-brand {
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
+    padding: 0 20px;
+}
+
+header .nav-header {
+    width: 100%;
+    z-index: 1000;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+/* Input */
+
+input.form-control {
+    width: 100%;
+    height: 32px;
+    font-size: 12px;
+    border-color: #ccced0;
+    border-radius: 2px;
+    border-right: 0;
+}
+
+input.form-control:active,
+input.form-control:hover,
+input.form-control:focus {
+    border-color: #414141
+}
+
+/* Button */
+
+button.btn-primary {
+    height: 32px;
+    width: 120px;
+    font-size: 12px;
+    background: #2064B4;
+    border-radius: 0 2px 2px 0;
+    border: 0;
+    font-weight: 600;
+}
+
+button.btn-primary:hover {
+    background: #477DBD;
+}
+
+/* Iframe */
+
+iframe {
+    height: calc(100vh - 240px);
+    min-height: 500px;
+}
+
+/* Title */
+
+h2.title {
+    color: #414141;
+    font-size: 32px; 
+    letter-spacing: 0.02em;
+    line-height: 40px;
+    font-weight: 600;
+}
